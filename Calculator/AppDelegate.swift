@@ -1,10 +1,4 @@
-//
-//  AppDelegate.swift
-//  Calculator
-//
-//  Created by Cenker Demir on 4/21/16.
-//  Copyright © 2016 Cenker Demir. All rights reserved.
-//
+//Stanley Petley
 
 import UIKit
 
