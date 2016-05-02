@@ -1,3 +1,1 @@
-# deneme
-Just testing with the code from standford ios9 swift course
-this includes the first lecture code only
+Stanford's CS193P 2016 Spring Swift course lecture project.
