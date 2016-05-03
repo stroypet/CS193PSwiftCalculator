@@ -1,3 +1,6 @@
+//
+//  ViewController.swift
+//  Calculator
 //  Stanford CS193P Spring 2016 Class.
 //  Stanley Petley, 2/5/16.
 
@@ -19,12 +22,23 @@ class ViewController: UIViewController {
         }
         isUserInTheMiddleOfTyping = true
     }
+    
+    var displayValue: Double { //computed property, not stored.
+        get {
+            return Double(display.text!)! //need to unwrap optional, might not be convertable, right?
+        }
+        set{
+            display.text = String(newValue) //newValue keyword.
+        }
+    }
 
     @IBAction func performOperation(sender: UIButton) {
         isUserInTheMiddleOfTyping = false
         if let mathematicalSymbol = sender.currentTitle {
             if mathematicalSymbol == "∏" {
-                display.text = String(M_PI)
+                displayValue = M_PI
+            } else if mathematicalSymbol == "√" {
+                displayValue = sqrt(displayValue)
             }
         }
     }
