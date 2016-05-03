@@ -9,21 +9,21 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var display: UILabel!
-    var isUserInTheMiddleOfTyping = false
-    @IBAction func touchDigit(sender: UIButton) {
+    @IBOutlet private weak var display: UILabel! //check this later.
+    private var userIsInTheMiddleOfTyping = false
+    @IBAction private func touchDigit(sender: UIButton) {
         let digit = sender.currentTitle!
-        if isUserInTheMiddleOfTyping {
+        if userIsInTheMiddleOfTyping {
             let textCurrentlyInDisplay = display.text!
             display.text = textCurrentlyInDisplay + digit
         }
         else {
             display.text = digit
         }
-        isUserInTheMiddleOfTyping = true
+        userIsInTheMiddleOfTyping = true
     }
     
-    var displayValue: Double { //computed property, not stored.
+    private var displayValue: Double { //computed property, not stored.
         get {
             return Double(display.text!)! //need to unwrap optional, might not be convertable, right?
         }
@@ -31,16 +31,18 @@ class ViewController: UIViewController {
             display.text = String(newValue) //newValue keyword.
         }
     }
-
-    @IBAction func performOperation(sender: UIButton) {
-        isUserInTheMiddleOfTyping = false
-        if let mathematicalSymbol = sender.currentTitle {
-            if mathematicalSymbol == "∏" {
-                displayValue = M_PI
-            } else if mathematicalSymbol == "√" {
-                displayValue = sqrt(displayValue)
-            }
+    
+    private var brain = CalculatorBrain() //Controller talks through this to get to the model, need CalculatorBrain initializer, also infers it's type by equal sign.
+    
+    @IBAction private func performOperation(sender: UIButton) {
+        if userIsInTheMiddleOfTyping {
+            brain.setOperand(displayValue)
+            userIsInTheMiddleOfTyping = false
         }
+        if let mathematicalSymbol = sender.currentTitle {
+                brain.performOperation(mathematicalSymbol)
+        }
+        displayValue = brain.result
     }
 }
 
